@@ -26,6 +26,7 @@ The code has been tested on {Linux Ubuntu 16.04, TensorFlow-GPU 1.4} and {Window
 1. Install dependencies
 ```
 pip3 install -r requirements.txt
+pip install --upgrade tf_slim
 ```
 2. Clone or download this repository.
 3. Download the [pre-trained](http://cvg.ethz.ch/research/semantic-soft-segmentation/SSS_model.zip) model.
