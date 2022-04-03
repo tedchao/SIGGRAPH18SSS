@@ -61,7 +61,7 @@ def read_img(t_imgfname, input_size, img_mean): # optional pre-processing argume
 	  Two tensors: the decoded image and its mask.
 	"""
 
-	img_contents = tf.read_file(t_imgfname)
+	img_contents = tf.io.read_file(t_imgfname)
 	
 # 	img = tf.image.decode_image(img_contents, channels=3)
 	img = tf.image.decode_png(img_contents, channels=3)
@@ -74,10 +74,10 @@ def read_img(t_imgfname, input_size, img_mean): # optional pre-processing argume
 		h, w = input_size
 
 		# Randomly scale the images and labels.
-		newshape = tf.squeeze(tf.stack([h, w]), squeeze_dims=[1])
-		img2 = tf.image.resize_images(img, newshape)
+		newshape = tf.squeeze(tf.stack([h, w]), axis=[1])
+		img2 = tf.image.resize(img, newshape)
 	else:
-		img2 = tf.image.resize_images(img, tf.shape(img)[0:2,]*2)
+		img2 = tf.image.resize(img, tf.shape(input=img)[0:2,]*2)
 		
 	return img2, img
 
@@ -91,9 +91,9 @@ if __name__ == "__main__":
 	args = get_arguments()
 
 	# Set up tf session and initialize variables. 
-	config = tf.ConfigProto()
+	config = tf.compat.v1.ConfigProto()
 	config.gpu_options.allow_growth = True
-	with tf.Session(config=config) as sess:
+	with tf.compat.v1.Session(config=config) as sess:
 		model = HyperColumn_Deeplabv2(sess, args)
 
 		# Load variables if the checkpoint is provided.
@@ -112,7 +112,7 @@ if __name__ == "__main__":
 			padsize = 50
 			# the following read_img() calls could lead to a memory leakage-like issue or at least very slow. (need to be fixed later)
 			_, ori_img = read_img(local_imgflist[i], input_size = None, img_mean = IMG_MEAN)
-			pad_img = tf.pad(ori_img, [[padsize,padsize], [padsize,padsize], [0,0]], mode='REFLECT')
+			pad_img = tf.pad(tensor=ori_img, paddings=[[padsize,padsize], [padsize,padsize], [0,0]], mode='REFLECT')
 			cur_embed = model.test(pad_img.eval())
 			cur_embed = np.squeeze(cur_embed)
 			curfname = os.path.split(os.path.splitext(local_imgflist[i])[0])[1]
