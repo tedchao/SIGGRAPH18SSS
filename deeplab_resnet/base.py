@@ -16,7 +16,7 @@ class Model(object):
     return model_dir
 
   def save(self, checkpoint_dir, global_step=None):
-    self.saver = tf.train.Saver(max_to_keep=10)
+    self.saver = tf.compat.v1.train.Saver(max_to_keep=10)
 
     print(" [*] Saving checkpoints...")
     model_name = type(self).__name__ or "Reader"
@@ -29,7 +29,7 @@ class Model(object):
         os.path.join(checkpoint_dir, model_name), global_step=global_step)
 
   def load(self, checkpoint_dir):
-    self.saver = tf.train.Saver(max_to_keep=10)
+    self.saver = tf.compat.v1.train.Saver(max_to_keep=10)
 
     print(" [*] Loading checkpoints...")
     model_dir = self.get_model_dir()
