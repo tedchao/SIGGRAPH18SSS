@@ -2,6 +2,8 @@
 
 After proper installation, run
 ```
+  conda env create -f environment.yml
+  
   conda activate sss
 
   sh run_extract_feat.sh
