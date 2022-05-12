@@ -100,7 +100,7 @@ if __name__ == "__main__":
 		model.load(args.snapshot_dir)
 		
 		local_imgflist = load_dir_structs(args.data_dir)
-		save_folder = os.path.join(args.data_dir, args.feat_dir)
+		save_folder = args.feat_dir
 		if not os.path.exists(save_folder):
 			os.mkdir(save_folder)
 
