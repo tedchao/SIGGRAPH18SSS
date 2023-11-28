@@ -18,6 +18,7 @@ import scipy.io as sio
 from glob import glob
 
 import tensorflow as tf
+from time import perf_counter
 import numpy as np
 import pdb
 
@@ -100,7 +101,7 @@ if __name__ == "__main__":
 		model.load(args.snapshot_dir)
 		
 		local_imgflist = load_dir_structs(args.data_dir)
-		save_folder = os.path.join(args.data_dir, args.feat_dir)
+		save_folder = args.feat_dir
 		if not os.path.exists(save_folder):
 			os.mkdir(save_folder)
 
@@ -112,12 +113,15 @@ if __name__ == "__main__":
 			padsize = 50
 			# the following read_img() calls could lead to a memory leakage-like issue or at least very slow. (need to be fixed later)
 			_, ori_img = read_img(local_imgflist[i], input_size = None, img_mean = IMG_MEAN)
+			start = perf_counter()
 			pad_img = tf.pad(tensor=ori_img, paddings=[[padsize,padsize], [padsize,padsize], [0,0]], mode='REFLECT')
 			cur_embed = model.test(pad_img.eval())
 			cur_embed = np.squeeze(cur_embed)
+			end = perf_counter()
 			curfname = os.path.split(os.path.splitext(local_imgflist[i])[0])[1]
 			cur_svpath = os.path.join(save_folder, curfname + '.mat')
 			print(cur_svpath)
+			print(f"took {end - start} seconds to generate features")
 			sio.savemat(cur_svpath, {'embedmap': cur_embed[padsize:(cur_embed.shape[0]-padsize),padsize:(cur_embed.shape[1]-padsize),:]})
 		
 
