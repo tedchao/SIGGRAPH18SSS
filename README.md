@@ -29,8 +29,7 @@ pip3 install -r requirements.txt
 pip install --upgrade tf_slim
 ```
 2. Clone or download this repository.
-3. Download the [pre-trained](http://cvg.ethz.ch/research/semantic-soft-segmentation/SSS_model.zip) model.
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Note: The link above seems not to be working anymore. [Here](https://drive.google.com/file/d/1u5UrH8rFfgYMdi920dbgw1tomdDO5Azj/view?usp=sharing) is another link for the pre-trained model.
+3. Download the [pre-trained](http://cvg.ethz.ch/research/semantic-soft-segmentation/SSS_model.zip) model. (Note: This link seems not to be working anymore. [Here](https://drive.google.com/file/d/1u5UrH8rFfgYMdi920dbgw1tomdDO5Azj/view?usp=sharing) is another link for downloading the pre-trained model.)
 5. Extract the model and put the extracted "model" folder into the folder where the repository is cloned.
    - e.g., If the repository is cloned at "/project/sss", then move the model to be "/project/sss/model")
 6. Run "run_extract_feat.sh", which will process sample images in the "samples" folder. If you want to run your own images, notice that image files should be the PNG formats.
