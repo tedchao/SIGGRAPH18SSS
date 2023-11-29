@@ -25,8 +25,8 @@ The code has been tested on {Linux Ubuntu 16.04, TensorFlow-GPU 1.4} and {Window
 # Installation
 1. Install dependencies
 ```
-pip3 install -r requirements.txt
-pip install --upgrade tf_slim
+conda env create -f environment.yml
+conda activate sss
 ```
 2. Clone or download this repository.
 3. Download the [pre-trained](http://cvg.ethz.ch/research/semantic-soft-segmentation/SSS_model.zip) model. (Note: This link seems not to be working anymore. [Here](https://drive.google.com/file/d/1u5UrH8rFfgYMdi920dbgw1tomdDO5Azj/view?usp=sharing) is another link for downloading the pre-trained model.)
